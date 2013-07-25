@@ -1,0 +1,13 @@
+{
+    "http":{
+        "port":"8080"
+       ,"path":"/"
+    },
+    "express":{
+        "env":"DEVELOPMENT",
+        "title":"Node-WeChat"
+    },
+    "wechat":{
+        "token":"FengfEnGA324fgkweqw"
+    }
+}

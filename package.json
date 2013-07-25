@@ -1,0 +1,15 @@
+{
+    "name": "nodewechat"
+  , "description": "A node.js application for Wechat development."
+  , "version": "0.0.10"
+  , "author": "Chilledheart"
+  , "main": "main.js"
+  , "repository": "git://github.com/windyland/node-wechat"
+  , "dependencies": {
+      "xml2js": ""
+     ,"express":""
+     ,"sax": ""
+     ,"redis": ""
+     ,"hiredis": ""
+  }
+}
