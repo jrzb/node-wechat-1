@@ -29,14 +29,13 @@ app.use(function(req,res,next){
 app.use(express.wechatMsg);
 app.use(express.Router);
 app.use(function(err,req,res,next){
+    var datetime= new Date;
+    console.log('TIME: '+datetime);
+    console.log('SOURCE: '+req.host+'['+req.ip+']');
+    console.log('DEST: '+req.originalUrl);
+    console.log('Headers: '+req.headers);
     if(err){
-        var datetime= new Date;
-        console.log('TIME: '+datetime);
-        console.log('SOURCE: '+req.host+'['+req.ip+']');
-        console.log('DEST: '+req.originalUrl);
         console.log('Error code: '+err);
-        if(req.headers)
-            console.log('Body: '+req.headers);
         if(req.body)
             console.log('Body: '+req.body);
     }
@@ -49,7 +48,7 @@ app.use(function(err,req,res,next){
 
 /*app.use(express.errorHandler());*/
 
-app.get(setting.http.path, function(req,res){res.send(req.query.echostr);});
+app.get(setting.http.path, function(req,res){res.end(req.query.echostr);});
 app.post(setting.http.path, function(req,res,next){
     console.dir(req.msg);
     next();
