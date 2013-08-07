@@ -28,7 +28,7 @@ app.use(function(req,res,next){
     next();
 });
 app.use(express.wechatMsg());
-app.use(express.Router);
+app.use(app.routes);
 app.use(function(err,req,res,next){
     var time= new Date;
     console.log('TIME: '+time);
