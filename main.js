@@ -3,12 +3,11 @@ var express = require('express')
     , path = require('path')
     , redis = require('redis');
 var setting = require('./setting.json');
-var libwechat = require('./lib/libwechat');
 var app = express();
-/*express conf*/
+express.wechatAuth = require('./lib/middleware/wechatAuth');
+express.xml = require('./lib/middleware/xml');
 
 
-/*express basic conf*/
 app.set('port', setting.http.port);
 var express_env=setting.express.env;
 var express_title=setting.express.title;
@@ -19,13 +18,14 @@ app.set('view engine', 'ejs');
 app.disable('x-powered-by');
 /*express middleware conf*/
 app.use(express.logger('dev'));
-app.use(libwechat.auth);
-app.use(libwechat.bodyParser);
-app.use(app.router);
+app.use(express.wechatAuth);
+app.use(express.json);
+app.use(express.xml);
 app.use(function(req,res,next){
-
-    next();
+    if(!req._body)
+    	next(400);
 });
+app.use(express.Router);
 app.use(function(err,req,res,next){
     if(err){
         var datetime= new Date;
@@ -35,8 +35,8 @@ app.use(function(err,req,res,next){
         console.log('Error code: '+err);
         if(req.headers)
             console.log('Body: '+req.headers);
-        if(req.rawbody)
-            console.log('Body: '+req.rawbody);
+        if(req.body)
+            console.log('Body: '+req.body);
     }
     res.connection.removeAllListeners('data');
     res.connection.destroy();
@@ -49,7 +49,6 @@ app.use(function(err,req,res,next){
 
 app.get(setting.http.path, function(req,res){res.send(req.query.echostr);});
 app.post(setting.http.path, function(req,res,next){
-
     var datetime= new Date;
     console.log('TIME: '+datetime);
     console.log('From: '+req.body.FromUserName);
