@@ -19,23 +19,24 @@ app.set('view engine', 'ejs');
 app.disable('x-powered-by');
 /*express middleware conf*/
 app.use(express.logger('dev'));
-app.use(express.wechatAuth);
-app.use(express.json);
-app.use(express.xml);
+app.use(express.wechatAuth({token:require('./setting').wechat.token}));
+app.use(express.xml());
+app.use(express.json());
 app.use(function(req,res,next){
     if(req.method=='POST' && !req._body)
-    	next(400);
+    	return	next(400);
+    next();
 });
-app.use(express.wechatMsg);
+app.use(express.wechatMsg());
 app.use(express.Router);
 app.use(function(err,req,res,next){
-    var datetime= new Date;
-    console.log('TIME: '+datetime);
+    var time= new Date;
+    console.log('TIME: '+time);
     console.log('SOURCE: '+req.host+'['+req.ip+']');
     console.log('DEST: '+req.originalUrl);
     console.log('Headers: '+req.headers);
     if(err){
-        console.log('Error code: '+err);
+        console.log(err);
         if(req.body)
             console.log('Body: '+req.body);
     }
@@ -51,7 +52,7 @@ app.use(function(err,req,res,next){
 app.get(setting.http.path, function(req,res){res.end(req.query.echostr);});
 app.post(setting.http.path, function(req,res,next){
     console.dir(req.msg);
-    next();
+    res.end('');
 });
 /*start out server*/
 var server=http.createServer(app,function(err){
