@@ -51,7 +51,7 @@ app.use(function(err,req,res,next){
 
 app.get(setting.http.path, function(req,res){res.end(req.query.echostr);});
 app.post(setting.http.path, function(req,res,next){
-    console.dir(req.msg);
+    console.dir(req.wechatMsg);
     res.end('');
 });
 /*start out server*/
