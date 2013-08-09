@@ -13,7 +13,7 @@ request({url:url},function(err,res,body){
 	console.log('access_token: '+result.access_token);
 
 	url2=url2+result.access_token.toString();
-	request({url:url2,method:'POST',json:wechat.menu},function(err2,res2,body2){
+	request({url:url2,method:'POST',body:JSON.stringify(wechat.menu)},function(err2,res2,body2){
 	if(err2) return console.log(err2);
 	var result2=body2;
 	if(0 ==  result2.errcode)
