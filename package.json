@@ -7,10 +7,11 @@
   , "repository": "git://github.com/windyland/node-wechat"
   , "dependencies": {
       "xml2js": ""
-     ,"express":""
+     ,"express":"~3.3.4"
      ,"connect":""
      ,"sax": ""
      ,"redis": ""
      ,"hiredis": ""
+     ,"request": ""
   }
 }
