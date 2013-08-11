@@ -3,12 +3,13 @@ var express = require('express')
     , path = require('path')
     , redis = require('redis');
 var setting = require('./setting.json');
-var app = express();
 express.wechatAuth = require('./lib/middleware/wechatAuth');
 express.xml = require('./lib/middleware/xml');
 express.wechatMsg = require('./lib/middleware/wechatMsg');
 
+var wechatSend = require('./lib/wechatSend');
 
+var app = express();
 app.set('port', setting.http.port);
 var express_env=setting.express.env;
 var express_title=setting.express.title;
@@ -49,10 +50,9 @@ app.use(function(err,req,res,next){
 
 /*app.use(express.errorHandler());*/
 
-app.get(setting.http.path, function(req,res){res.end(req.query.echostr);});
-app.post(setting.http.path, function(req,res,next){
-    console.dir(req.wechatMsg);
-    res.end('');
+app.get(setting.wechat.url, function(req,res){res.end(req.query.echostr);});
+app.post(setting.wechat.url, function(req,res){
+    wechatSend(req,res);
 });
 /*start out server*/
 var server=http.createServer(app,function(err){
