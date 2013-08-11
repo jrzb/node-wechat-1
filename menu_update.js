@@ -18,7 +18,7 @@ request({url:url},function(err,res,body){
 	var result2=body2;
 	if(0 ==  result2.errcode)
 		return console.log('done' +' : '+result2.errmsg);
-	console.log(result.errcode+' : '+result.errmsg);
+	console.log(result2.errcode+' : '+result2.errmsg);
 	});
 	
 });

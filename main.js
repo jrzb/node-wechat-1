@@ -21,7 +21,7 @@ app.disable('x-powered-by');
 app.use(express.logger('dev'));
 app.use(express.wechatAuth({token:require('./setting').wechat.token}));
 app.use(express.xml());
-app.use(express.json());
+//app.use(express.json());
 app.use(function(req,res,next){
     if(req.method=='POST' && !req._body)
     	return	next(400);
